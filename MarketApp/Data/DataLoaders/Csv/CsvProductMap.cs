@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CsvHelper.Configuration;
+﻿using CsvHelper.Configuration;
 
-namespace MarketDataAnalyser.Data
+namespace MarketApp.Data.DataLoader.Maps
 {
-    public class ProductMap : ClassMap<Product>
+    public class CsvProductMap : ClassMap<Product>
     {
-        public ProductMap()
+        public CsvProductMap()
         {
             Map(p => p.Title).Name("title");
             Map(p => p.Brand).Name("brand");

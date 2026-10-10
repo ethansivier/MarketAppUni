@@ -1,22 +1,21 @@
 using System.Globalization;
-using MarketDataAnalyser.Data;
+using MarketApp.Data;
 
-namespace MarketDataAnalyser.Data
+namespace MarketApp.Data
 {
     public static class Calculations
     {
 
-        public static decimal? GetPrice(List<String> properties, Product product)
+        public static decimal? GetPrice(List<string> properties, Product product)
         {
-            foreach(String prop in properties)
+            foreach(string prop in properties)
             {
-                String value = product.GetType().GetProperty(prop).GetValue(product, null).ToString();
-                if (value != null)
-                {
-                    decimal? price = ConvertToDecimal(value);
-                    if (price == null) continue;
-                    return price;
-                }
+                object? rawValue = product[prop];
+                if (rawValue == null) continue;
+                
+                decimal? price = ConvertToDecimal(rawValue.ToString());
+                if (price == null) continue;
+                return price;
             }
             return null;
         }
@@ -38,10 +37,11 @@ namespace MarketDataAnalyser.Data
             return 0;
         }
         
-        public static List<String> ReverseList(List<String> list)
+        public static List<string> ReverseList(List<string> list)
         {
-            list.Reverse();
-            return list;
+            List<string> reversedList = new List<string>(list);
+            reversedList.Reverse();
+            return reversedList;
         }
 
         public static string CalculateChangeInPrice(List<Product> selectedProducts)
@@ -49,12 +49,14 @@ namespace MarketDataAnalyser.Data
             decimal totalFirst = 0;
             decimal totalLast = 0;
             decimal change = 0;
-            List<String> properties = new List<String> {"Dec2021Price", "May2022Price", "Jul2022Price", "Sep2022Price", "Oct2022Price"};
+
+            List<string> properties = new List<string> {"Dec2021Price", "May2022Price", "Jul2022Price", "Sep2022Price", "Oct2022Price"};
+            List<string> reversedProperties = ReverseList(properties);
 
             foreach (Product product in selectedProducts)
             {
-                decimal? productFirst = GetPrice(properties, product);
-                decimal? productLast = GetPrice(ReverseList(properties), product);
+                decimal? productFirst = GetPrice(properties, product); //encapsulating what varies & dry
+                decimal? productLast = GetPrice(reversedProperties, product); 
 
                 if (productFirst.HasValue && productLast.HasValue)
                 {

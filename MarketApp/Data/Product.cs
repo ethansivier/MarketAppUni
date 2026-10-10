@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using MarketApp.Interfaces;
 
-namespace MarketDataAnalyser.Data
+namespace MarketApp.Data
 {
-   public class Product
+   public class Product:IProduct
     {
+        public object? this[string propName]
+        {
+            get
+            {
+                return  this.GetType().GetProperty(propName)?.GetValue(this); //dry
+            }
+        }
+
         public string Title { get; set; }
         public string Brand { get; set; }
         public string Dec2021Price {get;set;}
@@ -16,4 +21,5 @@ namespace MarketDataAnalyser.Data
         public string Sep2022Price {get;set;}
         public string Oct2022Price {get;set;}
     }
+
 }
