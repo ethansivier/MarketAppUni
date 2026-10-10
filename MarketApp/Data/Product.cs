@@ -10,10 +10,10 @@ namespace MarketDataAnalyser.Data
     {
         public string Title { get; set; }
         public string Brand { get; set; }
-        public string InitialPrice { get; set; }
-        public string Currency {  get; set; }
-        public string Categories { get; set; }
-        public string DateFirstAvaliable { get; set; }
-        public string Rating { get; set; }
+        public string Dec2021Price {get;set;}
+        public string May2022Price {get;set;}
+        public string Jul2022Price {get;set;}
+        public string Sep2022Price {get;set;}
+        public string Oct2022Price {get;set;}
     }
 }
